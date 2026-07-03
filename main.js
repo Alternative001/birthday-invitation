@@ -23,9 +23,14 @@ const inviteName = inviteNames.join(" & ").slice(0, 60);
 
 if (inviteName) {
   const eyebrow = document.getElementById("hero-eyebrow");
-  if (eyebrow) eyebrow.textContent = "Dear " + inviteName;
+  if (eyebrow) eyebrow.textContent = "An invitation for";
+  const nameEl = document.getElementById("hero-name");
+  if (nameEl) { nameEl.textContent = inviteName; nameEl.style.display = "block"; }
+  // let the script name land on its own beat, then push the rest back
   const sub = document.getElementById("hero-sub");
-  if (sub) sub.textContent = "you are invited to a brunch marking thirty years of";
+  if (sub) sub.style.animationDelay = ".95s";
+  const h1 = document.querySelector(".hero-frame h1");
+  if (h1) h1.style.animationDelay = "1.1s";
   const chug = document.getElementById("rule-chug");
   if (chug) chug.textContent = "…" + inviteName + ", you chug your drink until I look at you like this.";
   const nameField = document.getElementById("rName");

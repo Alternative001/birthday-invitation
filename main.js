@@ -126,6 +126,30 @@ if (calBtn) calBtn.addEventListener("click", () => {
   setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 600);
 });
 
+/* ----------------------------- mobile story parallax ----------------------------- */
+// on mobile, each story photo sits in a 76vh full-bleed frame, oversized by 40%;
+// this nudges it opposite the scroll direction for a parallax feel as it passes through.
+const storyImgs = Array.from(document.querySelectorAll(".story-img"));
+const isMobileStory = () => window.matchMedia("(max-width: 680px)").matches;
+
+function updateStoryParallax() {
+  if (!isMobileStory()) {
+    storyImgs.forEach((img) => { img.style.transform = ""; });
+    return;
+  }
+  const vh = window.innerHeight;
+  storyImgs.forEach((img) => {
+    const rect = img.parentElement.getBoundingClientRect();
+    if (rect.bottom < -300 || rect.top > vh + 300) return; // skip work well off-screen
+    const center = rect.top + rect.height / 2;
+    const offset = (vh / 2 - center) * 0.12;
+    img.style.transform = "translateY(" + offset.toFixed(1) + "px)";
+  });
+}
+window.addEventListener("scroll", updateStoryParallax, { passive: true });
+window.addEventListener("resize", updateStoryParallax);
+updateStoryParallax();
+
 /* ----------------------------- story reveal on scroll ----------------------------- */
 const io = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {

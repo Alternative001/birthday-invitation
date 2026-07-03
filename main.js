@@ -54,7 +54,7 @@ const submit = document.getElementById("rSubmit");
 function confirmLine(name, guests, attending) {
   if (attending === "no") return "You will be missed dearly — thank you for letting me know.";
   const seats = guests === "1" ? "a seat is saved for you" : guests + " seats are saved for your party";
-  return "Wonderful — " + seats + ". Full details to follow.";
+  return "Wonderful — " + seats + ". See you at Andaliman.";
 }
 
 form.addEventListener("submit", async (e) => {

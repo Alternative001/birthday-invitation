@@ -11,6 +11,57 @@ const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbwoe17u0RRSom0XzL
 /* ----------------------------- state ----------------------------- */
 const state = { attending: "yes" };
 
+/* ----------------------------- personal invitation ----------------------------- */
+// Personal links: ?to=Anna — or for couples/groups, repeat the param: ?to=Ina&to=Hannes
+// (renders as "Ina & Hannes"). Without the param the site shows the general version.
+const inviteNames = new URLSearchParams(location.search)
+  .getAll("to")
+  .map((s) => s.replace(/[<>&"]/g, "").trim())
+  .filter(Boolean)
+  .slice(0, 4);
+const inviteName = inviteNames.join(" & ").slice(0, 60);
+
+if (inviteName) {
+  const eyebrow = document.getElementById("hero-eyebrow");
+  if (eyebrow) eyebrow.textContent = "Dear " + inviteName;
+  const sub = document.getElementById("hero-sub");
+  if (sub) sub.textContent = "you are invited to a brunch marking thirty years of";
+  const chug = document.getElementById("rule-chug");
+  if (chug) chug.textContent = "…" + inviteName + ", you chug your drink until I look at you like this.";
+  const nameField = document.getElementById("rName");
+  if (nameField) nameField.value = inviteName;
+  const guestsField = document.getElementById("rGuests");
+  if (guestsField && inviteNames.length > 1) guestsField.value = String(Math.min(inviteNames.length, 4));
+}
+
+/* ----------------------------- gold fizz on "joyfully accepts" ----------------------------- */
+function goldFizz(originEl) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const rect = originEl.getBoundingClientRect();
+  const colors = ["#c2a878", "#e8d9a0", "#fff6d8", "#a98f63"];
+  for (let i = 0; i < 26; i++) {
+    const p = document.createElement("div");
+    const size = 3 + Math.random() * 5;
+    p.style.cssText =
+      "position:fixed; z-index:80; pointer-events:none; border-radius:50%;" +
+      "width:" + size + "px; height:" + size + "px;" +
+      "left:" + (rect.left + Math.random() * rect.width) + "px;" +
+      "top:" + (rect.top + rect.height / 2) + "px;" +
+      "background:" + colors[i % colors.length] + ";" +
+      "box-shadow:0 0 " + (4 + Math.random() * 6) + "px rgba(226,192,122,.9);";
+    document.body.appendChild(p);
+    const dx = (Math.random() - 0.5) * 170;
+    const dy = -(60 + Math.random() * 160);
+    p.animate(
+      [
+        { transform: "translate(0,0) scale(1)", opacity: 1 },
+        { transform: "translate(" + dx + "px," + dy + "px) scale(.2)", opacity: 0 },
+      ],
+      { duration: 900 + Math.random() * 700, easing: "cubic-bezier(.16,.84,.44,1)" }
+    ).onfinish = () => p.remove();
+  }
+}
+
 /* ----------------------------- countdown ----------------------------- */
 // 16 Aug 2026, 1pm Dubai time (UTC+4) == 09:00 UTC
 const TARGET = new Date("2026-08-16T13:00:00+04:00").getTime();
@@ -42,7 +93,7 @@ function paintToggles() {
   btnYes.setAttribute("style", toggleStyle(state.attending === "yes", "#2f3a2c", "#efe9dd"));
   btnNo.setAttribute("style",  toggleStyle(state.attending === "no",  "#8a6d4f", "#efe9dd"));
 }
-btnYes.addEventListener("click", () => { state.attending = "yes"; paintToggles(); });
+btnYes.addEventListener("click", () => { state.attending = "yes"; paintToggles(); goldFizz(btnYes); });
 btnNo.addEventListener("click",  () => { state.attending = "no";  paintToggles(); });
 paintToggles();
 
@@ -108,11 +159,6 @@ if (calBtn) calBtn.addEventListener("click", () => {
     "LOCATION:Andaliman, One Za'abeel, Dubai",
     "DESCRIPTION:Brunch from 1 to 4 in the afternoon. It's on Julian - just bring yourself.",
     "URL:https://share.google/kqYCrVnFTjfO7gXPy",
-    "BEGIN:VALARM",
-    "TRIGGER:-P1D",
-    "ACTION:DISPLAY",
-    "DESCRIPTION:Julian's 30th brunch tomorrow",
-    "END:VALARM",
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");

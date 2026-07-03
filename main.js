@@ -6,7 +6,7 @@
    Until it is set, the form still works locally (shows the thank-you) but no
    response is recorded.
    ------------------------------------------------------------------------- */
-const RSVP_ENDPOINT = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbwoe17u0RRSom0XzL56JVFn7U76uws4Zd25jxFFfVgwetzccVt_ZdWpOXTeaP_9Fgeh/exec";
 
 /* ----------------------------- state ----------------------------- */
 const state = { attending: "yes" };

@@ -68,8 +68,8 @@ function goldFizz(originEl) {
 }
 
 /* ----------------------------- countdown ----------------------------- */
-// 16 Aug 2026, 1pm Dubai time (UTC+4) == 09:00 UTC
-const TARGET = new Date("2026-08-16T13:00:00+04:00").getTime();
+// 15 Aug 2026, 9pm Dubai time (UTC+4) == 17:00 UTC — the celebration begins
+const TARGET = new Date("2026-08-15T21:00:00+04:00").getTime();
 const pad = (n) => (n < 10 ? "0" : "") + n;
 
 function tick() {
@@ -110,7 +110,7 @@ const submit = document.getElementById("rSubmit");
 function confirmLine(name, guests, attending) {
   if (attending === "no") return "You will be missed dearly — thank you for letting me know.";
   const seats = guests === "1" ? "a seat is saved for you" : guests + " seats are saved for your party";
-  return "Wonderful — " + seats + ". See you at Andaliman.";
+  return "Wonderful — " + seats + ". See you at The Guild.";
 }
 
 form.addEventListener("submit", async (e) => {
@@ -156,14 +156,14 @@ if (calBtn) calBtn.addEventListener("click", () => {
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "BEGIN:VEVENT",
-    "UID:julian-30-brunch-20260816@dubai",
-    "DTSTAMP:20260703T000000Z",
-    "DTSTART:20260816T090000Z",
-    "DTEND:20260816T120000Z",
-    "SUMMARY:Julian's 30th - Sunday Brunch",
-    "LOCATION:Andaliman, One Za'abeel, Dubai",
-    "DESCRIPTION:Brunch from 1 to 4 in the afternoon. It's on Julian - just bring yourself.",
-    "URL:https://share.google/kqYCrVnFTjfO7gXPy",
+    "UID:julian-30-brunch-20260815@dubai",
+    "DTSTAMP:20260712T000000Z",
+    "DTSTART:20260815T170000Z",
+    "DTEND:20260815T210000Z",
+    "SUMMARY:Julian's 30th - Brunch Society at The Guild",
+    "LOCATION:The Guild, DIFC, Dubai",
+    "DESCRIPTION:Brunch Society at The Guild, 9 PM until 1 AM - celebrating into Julian's birthday. It's on Julian - just bring yourself.",
+    "URL:https://share.google/vBY1NVazj0OJ89oag",
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");

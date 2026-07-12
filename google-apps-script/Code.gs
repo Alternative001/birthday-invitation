@@ -105,6 +105,18 @@ function computeTally(sheet) {
   return t;
 }
 
+// Run this ONCE from the editor (pick "testEmail" ▸ Run) to grant the email
+// permission and send yourself a test. Check inbox AND spam afterwards.
+function testEmail() {
+  var quota = MailApp.getRemainingDailyQuota();
+  MailApp.sendEmail(
+    NOTIFY_EMAIL,
+    'RSVP test email',
+    'If you can read this, notifications work.\nEmails left today: ' + quota
+  );
+  Logger.log('Sent test to ' + NOTIFY_EMAIL + '. Remaining quota: ' + quota);
+}
+
 // A GET on the URL just confirms the endpoint is live (handy for testing).
 function doGet() {
   return json({ ok: true, message: 'RSVP endpoint is live.' });

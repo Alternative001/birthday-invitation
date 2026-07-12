@@ -51,13 +51,15 @@ function doPost(e) {
     sheet.appendRow([new Date(), row.name, row.guests, row.attending, row.note]);
 
     // email notification — never let a mail hiccup break the RSVP write
+    var mailStatus = 'ok';
     try {
       notify(sheet, row);
     } catch (mailErr) {
-      // swallow: the RSVP is safely recorded either way
+      mailStatus = String(mailErr);
+      Logger.log('notify FAILED: ' + mailErr);   // shows in View ▸ Executions
     }
 
-    return json({ ok: true });
+    return json({ ok: true, mail: mailStatus });
   } catch (err) {
     return json({ ok: false, error: String(err) });
   } finally {
@@ -115,6 +117,16 @@ function testEmail() {
     'If you can read this, notifications work.\nEmails left today: ' + quota
   );
   Logger.log('Sent test to ' + NOTIFY_EMAIL + '. Remaining quota: ' + quota);
+}
+
+// Run this from the editor (pick "testDoPost" ▸ Run) to exercise the REAL RSVP
+// path — it appends a test row and emails you, with any error shown in the log.
+function testDoPost() {
+  var fake = { postData: { contents: JSON.stringify({
+    name: 'Test Guest', guests: '2', attending: 'yes', note: 'from testDoPost'
+  }) } };
+  var res = doPost(fake);
+  Logger.log('doPost returned: ' + res.getContent());
 }
 
 // A GET on the URL just confirms the endpoint is live (handy for testing).

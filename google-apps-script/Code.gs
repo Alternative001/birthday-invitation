@@ -131,7 +131,7 @@ function testDoPost() {
 
 // A GET on the URL just confirms the endpoint is live (handy for testing).
 function doGet() {
-  return json({ ok: true, message: 'RSVP endpoint is live.' });
+  return json({ ok: true, message: 'RSVP endpoint is live.', version: 'v3-email' });
 }
 
 function json(obj) {

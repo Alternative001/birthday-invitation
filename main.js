@@ -37,6 +37,8 @@ if (inviteName) {
   if (nameField) nameField.value = inviteName;
   const guestsField = document.getElementById("rGuests");
   if (guestsField && inviteNames.length > 1) guestsField.value = String(Math.min(inviteNames.length, 4));
+  const nudge = document.getElementById("rsvp-nudge");
+  if (nudge) nudge.textContent = "Or just RSVP right here, " + inviteName + ". You are definitely coming anyway!";
 }
 
 /* ----------------------------- gold fizz on "joyfully accepts" ----------------------------- */

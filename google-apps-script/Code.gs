@@ -1,8 +1,8 @@
 /**
  * Julian at Thirty — RSVP collector
  * -----------------------------------------------------------------------------
- * This Google Apps Script receives RSVP submissions from the birthday website
- * and appends them as rows to the Google Sheet it is bound to.
+ * Receives RSVP submissions from the birthday website, appends them as rows to
+ * the bound Google Sheet, AND emails Julian a notification with a running tally.
  *
  * SETUP (see google-apps-script/SETUP.md for the click-by-click version):
  *   1. Create a Google Sheet.
@@ -11,8 +11,15 @@
  *        - Execute as: Me
  *        - Who has access: Anyone
  *   4. Copy the Web app URL and paste it into main.js as RSVP_ENDPOINT.
+ *
+ * TO UPDATE an already-deployed script (e.g. to enable these emails):
+ *   paste this over the old code ▸ Save ▸ Deploy ▸ Manage deployments ▸
+ *   edit (pencil) ▸ Version: "New version" ▸ Deploy. The URL stays the same.
  * -----------------------------------------------------------------------------
  */
+
+// Where the notification emails go. Change if you want them elsewhere.
+var NOTIFY_EMAIL = 'julian.hesss@gmail.com';
 
 var HEADERS = ['Timestamp', 'Name', 'Guests', 'Attending', 'Note'];
 
@@ -34,13 +41,21 @@ function doPost(e) {
       sheet.setFrozenRows(1);
     }
 
-    sheet.appendRow([
-      new Date(),
-      String(data.name || '').slice(0, 200),
-      String(data.guests || '').slice(0, 10),
-      String(data.attending || '').slice(0, 10),
-      String(data.note || '').slice(0, 1000),
-    ]);
+    var row = {
+      name: String(data.name || '').slice(0, 200),
+      guests: String(data.guests || '').slice(0, 10),
+      attending: String(data.attending || '').slice(0, 10),
+      note: String(data.note || '').slice(0, 1000),
+    };
+
+    sheet.appendRow([new Date(), row.name, row.guests, row.attending, row.note]);
+
+    // email notification — never let a mail hiccup break the RSVP write
+    try {
+      notify(sheet, row);
+    } catch (mailErr) {
+      // swallow: the RSVP is safely recorded either way
+    }
 
     return json({ ok: true });
   } catch (err) {
@@ -48,6 +63,46 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
+}
+
+// Build and send the notification email with a running tally.
+function notify(sheet, row) {
+  var tally = computeTally(sheet);
+  var accepted = String(row.attending).toLowerCase() === 'yes';
+
+  var subject = 'RSVP: ' + row.name + (accepted ? ' — coming 🎉' : ' — can’t make it');
+
+  var body =
+    row.name + ' just replied.\n\n' +
+    '  Response:  ' + (accepted ? 'Joyfully accepts' : 'Regretfully declines') + '\n' +
+    '  Party:     ' + (row.guests || '1') + '\n' +
+    '  Note:      ' + (row.note || '—') + '\n\n' +
+    '——— Tally so far ———\n' +
+    '  Accepting: ' + tally.guestsComing + ' guests  (' + tally.acceptReplies + ' replies)\n' +
+    '  Declining: ' + tally.declineReplies + ' replies\n' +
+    '  Total replies: ' + (tally.acceptReplies + tally.declineReplies) + '\n';
+
+  MailApp.sendEmail(NOTIFY_EMAIL, subject, body);
+}
+
+// Count accepts/declines and total guests coming from the sheet.
+function computeTally(sheet) {
+  var last = sheet.getLastRow();
+  var t = { acceptReplies: 0, declineReplies: 0, guestsComing: 0 };
+  if (last < 2) return t; // only the header row
+  var values = sheet.getRange(2, 3, last - 1, 2).getValues(); // cols C (Guests) & D (Attending)
+  for (var i = 0; i < values.length; i++) {
+    var guests = parseInt(values[i][0], 10);
+    if (isNaN(guests)) guests = 1;
+    var attending = String(values[i][1]).toLowerCase();
+    if (attending === 'yes') {
+      t.acceptReplies++;
+      t.guestsComing += guests;
+    } else if (attending === 'no') {
+      t.declineReplies++;
+    }
+  }
+  return t;
 }
 
 // A GET on the URL just confirms the endpoint is live (handy for testing).

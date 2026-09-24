@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍋</text></svg>" />
+  <link rel="icon" type="image/png" href="assets/lemon.png" />
 </head>
 <body>
 
@@ -40,8 +40,7 @@
   <header class="hero">
     <nav class="nav container" aria-label="Main">
       <a href="/" class="logo" aria-label="Lemon Spark home">
-        <svg class="logo__mark"><use href="#lemon"/></svg>
-        <span class="logo__text">Lemon<br/>Spark</span>
+        <img src="assets/logo.png" alt="Lemon Spark" width="401" height="134" />
       </a>
       <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span class="sr-only">Menu</span>
@@ -75,7 +74,7 @@
         <figure class="hero__photo">
           <!-- Replace with founder photo: <img src="founder.jpg" alt="..." /> -->
           <div class="photo-placeholder">
-            <svg><use href="#lemon"/></svg>
+            <img src="assets/lemon-pale.png" alt="" />
             <span>Founder photo</span>
           </div>
         </figure>
@@ -121,12 +120,10 @@
     <!-- ============ SERVICES ============ -->
     <section class="services section" id="services">
       <div class="container">
-        <div class="section-head services__head">
-          <div>
-            <p class="eyebrow">Two ways we help you grow</p>
-            <h2 class="h2">Our Services</h2>
-          </div>
-          <p class="services__intro">Pick the one you need now. Most of our clients end up needing both, and that's fine too.</p>
+        <div class="section-head section-head--stack">
+          <p class="eyebrow">Two ways we help you grow</p>
+          <h2 class="h2">Our Services</h2>
+          <p class="section-head__intro">Pick the one you need now. Most of our clients end up needing both, and that's fine too.</p>
         </div>
 
         <article class="service">
@@ -135,14 +132,17 @@
             <h3 class="service__title">Marketing Visibility</h3>
             <p class="service__lead">Be seen where your customers are looking.</p>
             <p>We develop the strategy and content that help your brand become visible across search, AI, thought leadership and the channels that matter most to your audience.</p>
-            <a href="#contact" class="btn btn--yellow">Explore Marketing Visibility</a>
+            <a href="#contact" class="btn btn--yellow">Explore marketing visibility</a>
           </div>
-          <ul class="service__list">
-            <li><a href="#">Search &amp; AI Visibility</a></li>
-            <li><a href="#">Thought Leadership</a></li>
-            <li><a href="#">Website &amp; Conversion</a></li>
-            <li><a href="#">Demand Generation</a></li>
-          </ul>
+          <div class="service__includes">
+            <p class="service__includes-label">What's included</p>
+            <ul class="service__list">
+              <li>Search &amp; AI Visibility</li>
+              <li>Thought Leadership</li>
+              <li>Website &amp; Conversion</li>
+              <li>Demand Generation</li>
+            </ul>
+          </div>
           <svg class="service__slice" aria-hidden="true"><use href="#slice"/></svg>
         </article>
 
@@ -152,14 +152,17 @@
             <h3 class="service__title">Fractional Marketing Leadership</h3>
             <p class="service__lead">Build the marketing function your company needs to scale.</p>
             <p>From positioning and strategy to processes, funnel structures, tools and team setup, we help companies build marketing from the ground up without hiring a full-time CMO.</p>
-            <a href="#contact" class="btn btn--yellow">Explore Fractional Leadership</a>
+            <a href="#contact" class="btn btn--yellow">Explore fractional leadership</a>
           </div>
-          <ul class="service__list">
-            <li><a href="#">Marketing Strategy</a></li>
-            <li><a href="#">Positioning &amp; Messaging</a></li>
-            <li><a href="#">Marketing Operations</a></li>
-            <li><a href="#">Team &amp; Execution</a></li>
-          </ul>
+          <div class="service__includes">
+            <p class="service__includes-label">What's included</p>
+            <ul class="service__list">
+              <li>Marketing Strategy</li>
+              <li>Positioning &amp; Messaging</li>
+              <li>Marketing Operations</li>
+              <li>Team &amp; Execution</li>
+            </ul>
+          </div>
           <svg class="service__slice" aria-hidden="true"><use href="#slice"/></svg>
         </article>
       </div>
@@ -170,7 +173,7 @@
       <div class="container">
         <p class="statement__text">
           Visibility is great.<br/>
-          Visibility with a <span class="statement__hl">system</span> is better.
+          Visibility with a <span class="mark">system</span> is better.
         </p>
       </div>
     </section>
@@ -178,35 +181,33 @@
     <!-- ============ METHOD ============ -->
     <section class="method section" id="method">
       <div class="container">
-        <div class="method__head">
-          <div>
-            <p class="eyebrow">Our approach</p>
-            <h2 class="h2">The Lemon Method</h2>
-          </div>
-          <p>Marketing works best when the pieces work together. Our Lemon Method brings the essential parts of marketing together into one scalable system.</p>
+        <div class="section-head section-head--stack">
+          <p class="eyebrow">Our approach</p>
+          <h2 class="h2">The Lemon Method</h2>
+          <p class="section-head__intro">Marketing works best when the pieces work together. Our Lemon Method brings the essential parts of marketing together into one scalable system.</p>
         </div>
 
         <ol class="method__steps">
           <li class="step" style="--ripe:.3">
-            <svg class="step__lemon" aria-hidden="true"><use href="#lemon"/></svg>
+            <img class="step__lemon" src="assets/lemon.png" alt="" />
             <span class="step__num">01</span>
             <h3>Clarity</h3>
             <p>Know what you want to be known for.</p>
           </li>
           <li class="step" style="--ripe:.5">
-            <svg class="step__lemon" aria-hidden="true"><use href="#lemon"/></svg>
+            <img class="step__lemon" src="assets/lemon.png" alt="" />
             <span class="step__num">02</span>
             <h3>Structure</h3>
             <p>Build the system behind your marketing.</p>
           </li>
           <li class="step" style="--ripe:.75">
-            <svg class="step__lemon" aria-hidden="true"><use href="#lemon"/></svg>
+            <img class="step__lemon" src="assets/lemon.png" alt="" />
             <span class="step__num">03</span>
             <h3>Visibility</h3>
             <p>Show up where your audience is looking.</p>
           </li>
           <li class="step step--spark" style="--ripe:1">
-            <svg class="step__lemon" aria-hidden="true"><use href="#lemon"/></svg>
+            <img class="step__lemon" src="assets/lemon.png" alt="" />
             <span class="step__num">04</span>
             <h3>Momentum &amp; <span>Spark</span></h3>
             <p>Learn, optimize and scale what works, and stand out!</p>
@@ -221,14 +222,14 @@
         <div class="cta">
           <div class="cta__copy">
             <p class="eyebrow eyebrow--dark">Ready to get started?</p>
-            <h2 class="cta__title">Let's build marketing that <em>actually</em> works!</h2>
+            <h2 class="cta__title">Let's build marketing that <span class="mark--light">actually</span> works!</h2>
           </div>
           <div class="cta__side">
             <p>Whether you need to build your marketing function or make your brand visible, let's figure out what moves your business forward.</p>
             <a href="mailto:hello@lemon-spark.com" class="btn btn--blue">Let's talk</a>
           </div>
           <svg class="cta__slice" aria-hidden="true"><use href="#slice"/></svg>
-          <svg class="cta__lemon" aria-hidden="true"><use href="#lemon"/></svg>
+          <img class="cta__lemon" src="assets/lemon-white.png" alt="" />
         </div>
       </div>
     </section>
@@ -239,8 +240,7 @@
     <div class="container footer__inner">
       <div class="footer__brand">
         <a href="/" class="logo logo--light" aria-label="Lemon Spark home">
-          <svg class="logo__mark"><use href="#lemon"/></svg>
-          <span class="logo__text">Lemon<br/>Spark</span>
+          <img src="assets/logo-light.png" alt="Lemon Spark" width="401" height="134" />
         </a>
         <p>Strategy consultancy for B2B marketing. Squeezing more out of your brand since day one.</p>
       </div>
